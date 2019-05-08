@@ -29,7 +29,7 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
             if (event.target.className == 'cuadro') {
                 if (J1.turno == turno) {
                     ValTurno();
-                    if (ValTurno()== true){
+                    if (ValTurno() == true){
                         event.target.innerHTML = 'X';
                         mensaje.innerText = 'Turno de '+ J2.nombre;
                         turno++;
@@ -40,7 +40,7 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
                 }
                 if (J2.turno == turno) {
                     ValTurno();
-                    if (ValTurno()== true){
+                    if (ValTurno() == true){
                         event.target.innerHTML = 'O';
                         mensaje.innerText = 'Turno de '+ J1.nombre;
                         turno--;
@@ -97,7 +97,7 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
             return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
         if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
             return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        }
+    }
 
         
     }
