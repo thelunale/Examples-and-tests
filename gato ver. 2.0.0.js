@@ -2,10 +2,11 @@
 Realizar un juego de gato donde se muestre la base y se determine si gana alguien o no 
 ( usar JSON para el tablero "Investigar") con validaciones y aguacate. */
 
-    var turno = 1;
+    var turno = 0;
     var seccion = document.getElementsByClassName('cuadro');
     var reinicio = document.getElementById('reinicio');
     var mensaje = document.getElementById('mensaje');
+    var gato = document.getElementById("juego");
     
     var J1 = {nombre: '', turno: 1 , tipo: 'X'};
     var J2 = {nombre: '', turno: 2 , tipo: 'O'};
@@ -24,91 +25,88 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
         }
 
         mensaje.innerText = 'Turno de '+ J1.nombre;        
-
-   document.getElementById('juego').onclick = function(event){
+            
+        gato.onclick = function(event){
             if (event.target.className == 'cuadro') {
-                if (J1.turno == turno) {
-                    ValTurno();
-                    if (ValTurno() == true){
+                if (turno % 2 == 0){
+                    if(event.target.innerHTML != ""){
+                        alert('Accion no valida');
+                    }
+                    else{
                         event.target.innerHTML = 'X';
                         mensaje.innerText = 'Turno de '+ J2.nombre;
-                        turno++;
-                    }
-                    else{
-                        alert("Esa casilla ya esta ocupada, intenta de nuevo en otra casilla");
                     }
                 }
-                if (J2.turno == turno) {
-                    ValTurno();
-                    if (ValTurno() == true){
+                else{
+                    if(event.target.innerHTML != ""){
+                        alert('Accion no valida');
+                    }
+                    else{
                         event.target.innerHTML = 'O';
                         mensaje.innerText = 'Turno de '+ J1.nombre;
-                        turno--;
-                    }
-                    else{
-                        alert("Esa casilla ya esta ocupada, intenta de nuevo en otra casilla");
                     }
                 }
-            checkWinner();
+                turno++;            
+                checkWinner();
+            }
         }
-    }
 
-    var ValTurno = function(){
-        if(event.target.id != ''){
-            return true;
+        function checkWinner(){
+
+            // combinaciones de X
+            
+            if (seccion[0].innerHTML=='X' && seccion[1].innerHTML=='X' && seccion[2].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[3].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[5].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[6].innerHTML=='X' && seccion[7].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[0].innerHTML=='X' && seccion[3].innerHTML=='X' && seccion[6].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[1].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[7].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[2].innerHTML=='X' && seccion[5].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[0].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[2].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[6].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+    
+            // combinaciones de O
+    
+            if (seccion[0].innerHTML=='O' && seccion[1].innerHTML=='O' && seccion[2].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[3].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[5].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[6].innerHTML=='O' && seccion[7].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[0].innerHTML=='O' && seccion[3].innerHTML=='O' && seccion[6].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[1].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[7].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[2].innerHTML=='O' && seccion[5].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[0].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+
+            // Empate
+
+            if (seccion[0].innerHTML != '' && seccion[1].innerHTML != '' && seccion[2].innerHTML != '' && seccion[3].innerHTML != '' && seccion[4].innerHTML != '' && seccion[5].innerHTML != '' && seccion[6].innerHTML != '' && seccion[7].innerHTML != '' && seccion[8].innerHTML != '')
+                return (mensaje.innerText = 'Es empate!');
+            
         }
-        else {
-            return false;
-        }
-    }
 
-    function checkWinner(){
-        // combinacion de X
-        if (seccion[0].innerHTML=='X' && seccion[1].innerHTML=='X' && seccion[2].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[3].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[5].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[6].innerHTML=='X' && seccion[7].innerHTML=='X' && seccion[8].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[0].innerHTML=='X' && seccion[3].innerHTML=='X' && seccion[6].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[1].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[7].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[2].innerHTML=='X' && seccion[5].innerHTML=='X' && seccion[8].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[0].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[8].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        if (seccion[2].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[6].innerHTML=='X')
-            return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-        // combinations: 0
-        if (seccion[0].innerHTML=='O' && seccion[1].innerHTML=='O' && seccion[2].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[3].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[5].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[6].innerHTML=='O' && seccion[7].innerHTML=='O' && seccion[8].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[0].innerHTML=='O' && seccion[3].innerHTML=='O' && seccion[6].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[1].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[7].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[2].innerHTML=='O' && seccion[5].innerHTML=='O' && seccion[8].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[0].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[8].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-        if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
-            return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-    }
-
-        
-    }
+}
 
     function reiniciar() {
         for (let i = 0; i < seccion.length; i++) {
-            cuadro[i].innerText = '';
+            seccion[i].innerText = '';
         }
         J1 = {nombre: "", turno: 1 , tipo: 'X'};
         J2 = {nombre: "", turno: 2 , tipo: 'O'};
         mensaje.innerText = '';
-        turno = 1;
+        turno = 0;
         comenzar();
     }
