@@ -12,6 +12,7 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
     var J2 = {nombre: '', turno: 2 , tipo: 'O'};
 
     function comenzar(){
+        document.getElementById('iniciar').style.display = 'none';
         J1.nombre = prompt("Escriba el nombre del jugador 1:");
         while(J1.nombre == ''){
             alert("No puedes dejar el campo vacio");
@@ -101,6 +102,7 @@ Realizar un juego de gato donde se muestre la base y se determine si gana alguie
 }
 
     function reiniciar() {
+        document.getElementById('iniciar').style.display = 'inline';
         for (let i = 0; i < seccion.length; i++) {
             seccion[i].innerText = '';
         }
