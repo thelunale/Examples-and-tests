@@ -1,6 +1,6 @@
 /* Juego de gato:
 Realizar un juego de gato donde se muestre la base y se determine si gana alguien o no 
-( usar JSON para el tablero "Investigar") con validaciones y aguacate. */
+( usar JSON para el tablero "Investigar") con validaciones y exportarlo totalmente a polymer*/
 
 var turno = 0;
 var seccion = document.getElementsByClassName('cuadro');
@@ -13,6 +13,7 @@ var J2 = {nombre: '', turno: 2 , tipo: 'O'};
 
 function comenzar(){
     document.getElementById('iniciar').style.display = 'none';
+    document.getElementById('reiniciar').style.display = 'inline';
     J1.nombre = prompt("Escriba el nombre del jugador 1:");
     while(J1.nombre == ''){
         alert("No puedes dejar el campo vacio");
@@ -103,6 +104,7 @@ function comenzar(){
 
 function reiniciar() {
     document.getElementById('iniciar').style.display = 'inline';
+    document.getElementById('reiniciar').style.display = 'none';
     for (let i = 0; i < seccion.length; i++) {
         seccion[i].innerText = '';
     }
