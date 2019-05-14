@@ -1,31 +1,239 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Tic Tac Toe Game</title>
-    <link rel="stylesheet" href="gato ver. 2.0.0.css">
-    <script src="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="gato-polymer.html">
-</head>
+<!-- Juego de gato:
+Realizar un juego de gato exportado de polymer y elborado previamente en JS*/-->
 
-<body>
-    <gato-polymer onclick="comenzar()"></gato-polymer>
-    <h1>TIC-TAC-TOE</h1>
-    <div id="juego">
-        <div class="cuadro" id="uno"></div>
-        <div class="cuadro" id="dos"></div>
-        <div class="cuadro" id="tres"></div>
-        <div class="cuadro" id="cuatro"></div>
-        <div class="cuadro" id="cinco"></div>
-        <div class="cuadro" id="seis"></div>
-        <div class="cuadro" id="siete"></div>
-        <div class="cuadro" id="ocho"></div>
-        <div class="cuadro" id="nueve"></div>
-    </div>
-    <span id="mensaje"></span>
-  <button type="button" name="button" class="boton"  id="iniciar" onclick="comenzar()">INICIAR</button>
-  <button class="boton" class="boton" id="reiniciar" onclick="reiniciar()">Reiniciar</button>
-</body>
+<script src="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="gato-polymer.html">
+<style> 
+    body {
+        font-family: 'Trebuchet MS', Arial, sans-serif;
+    }
+    h1 {
+        text-align: center;
+        font-size: 25px;
+        color:rgb(66, 16, 107);
+    }
+    #mensaje {
+	    display: block;
+  	    border: 3px solid rgb(82, 39, 107); 
+	    width: 306px;
+        height: 50px;
+        margin: 0 auto 5px;    
+        font-size: 20px;
+        font-weight: bold;
+	    text-align: center;
+	    line-height: 50px;
+        color:rgb(60, 12, 92);
+    }
+    #juego {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 306px;
+        margin: 0 auto 5px;
+        border: 2px solid rgb(82, 39, 107);         
+    }
+    .cuadro {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border: 1px solid rgb(82, 39, 107);
+        color: rgb(171, 92, 187);
+        cursor: pointer;
+        text-align: center;    
+        font-size: 60px;
+        font-weight: bold;
+        transition: all linear 0.3s;
+    }
+    .cuadro:hover {
+        background-color: rgb(139, 70, 179);
+    }
+    .boton {
+        display: block;
+        margin: 0 auto;
+        border: 2px solid rgb(171, 120, 212);
+        border-radius: 4px;
+        background-color: #fff;
+        color: rgb(171, 120, 212);
+        font-size: 18px;
+        padding: 5px 15px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all linear 0.3s;
+    }
+    #reinicio:hover {
+        background-color: rgba(117, 28, 226, 0.25);
+    }
+</style>
 
-</html>
+<script>
+    // registra un nuevo elemento llamado gato-polymer
+    Polymer({
+        is: "gato-p",
+
+        properties: {
+            turno: {
+                type: Number,
+                value: 0
+            },
+            seccion: {
+                type: Number,
+                value: 0
+            },
+            gato: {
+                type: Number,
+                value: 0
+            },
+            J1: {
+                nombre: {
+                    type: String,
+                    value: ''
+                },
+                turno: {
+                    type: Number,
+                    value: 1
+                },
+                tipo: {
+                    type: String,
+                    value: 'X'
+                }
+            },
+            J2: {
+                nombre: {
+                    type: String,
+                    value: ''
+                },
+                turno: {
+                    type: Number,
+                    value: 2
+                },
+                tipo: {
+                    type: String,
+                    value: 'O'
+                }
+            },
+        },
+
+        is: 'gato-i',
+
+        properties: {
+            
+        },
+        is: 'mensaje',
+
+        properties: {
+            mensaje: {
+                type: String,
+                value: ''
+            },
+        },
+        is: 'accion',
+
+        properties: {
+            reinicio: {
+                type: Number,
+                value: 0
+            },
+        },
+
+        // añade las funciones nesesarias para el proceso del gato
+        comenzar: function() {
+            document.getElementById('iniciar').style.display = 'none';
+            document.getElementById('reiniciar').style.display = 'inline';
+            J1.nombre = prompt("Escriba el nombre del jugador 1:");
+            while(J1.nombre == ''){
+                alert("No puedes dejar el campo vacio");
+                J1.nombre = prompt("Escriba el nombre del jugador 1:");
+                
+            }
+            J2.nombre = prompt("Escriba el nombre del jugador 2:");
+            while(!J2.nombre){
+                alert("No puedes dejar el campo vacio");
+                J2.nombre = prompt("Escriba el nombre del jugador 2:");
+            }
+
+            mensaje.innerText = 'Turno de '+ J1.nombre;        
+
+            gato.onclick = function(event){
+                if (event.target.className == 'cuadro') {
+                    if (turno % 2 == 0){
+                        if(event.target.innerHTML != ""){
+                            alert('Accion no valida');
+                        }
+                        else{
+                            event.target.innerHTML = 'X';
+                            mensaje.innerText = 'Turno de '+ J2.nombre;
+                        }
+                    }
+                    else{
+                        if(event.target.innerHTML != ""){
+                            alert('Accion no valida');
+                        }
+                        else{
+                            event.target.innerHTML = 'O';
+                            mensaje.innerText = 'Turno de '+ J1.nombre;
+                        }
+                    }
+                turno++;            
+                checkWinner();
+            }
+        },
+        checkWinner: function() {
+            // combinaciones de X
+        
+            if (seccion[0].innerHTML=='X' && seccion[1].innerHTML=='X' && seccion[2].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[3].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[5].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[6].innerHTML=='X' && seccion[7].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[0].innerHTML=='X' && seccion[3].innerHTML=='X' && seccion[6].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[1].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[7].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[2].innerHTML=='X' && seccion[5].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[0].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[8].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+            if (seccion[2].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[6].innerHTML=='X')
+                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+
+            // combinaciones de O
+
+            if (seccion[0].innerHTML=='O' && seccion[1].innerHTML=='O' && seccion[2].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[3].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[5].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[6].innerHTML=='O' && seccion[7].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[0].innerHTML=='O' && seccion[3].innerHTML=='O' && seccion[6].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[1].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[7].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[2].innerHTML=='O' && seccion[5].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[0].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[8].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+            if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
+                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+
+            // Empate
+
+            if (seccion[0].innerHTML != '' && seccion[1].innerHTML != '' && seccion[2].innerHTML != '' && seccion[3].innerHTML != '' && seccion[4].innerHTML != '' && seccion[5].innerHTML != '' && seccion[6].innerHTML != '' && seccion[7].innerHTML != '' && seccion[8].innerHTML != '')
+                return (mensaje.innerText = 'Es empate!');
+        },
+        reiniciar: function() {
+            document.getElementById('iniciar').style.display = 'inline';
+            document.getElementById('reiniciar').style.display = 'none';
+            for (let i = 0; i < seccion.length; i++) {
+                seccion[i].innerText = '';
+            }
+            J1 = {nombre: "", turno: 1 , tipo: 'X'};
+            J2 = {nombre: "", turno: 2 , tipo: 'O'};
+            mensaje.innerText = '';
+            turno = 0;
+            comenzar();
+        }
+    });
+</script>
