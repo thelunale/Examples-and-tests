@@ -1,9 +1,14 @@
-
 <!-- Juego de gato:
 Realizar un juego de gato exportado de polymer y elborado previamente en JS*/-->
-
-<script src="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="gato-polymer.html">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe Polymer</title>
+    <script src="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import"  href="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/polymer/polymer.html">
+</head>
 <style> 
     body {
         font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -66,174 +71,187 @@ Realizar un juego de gato exportado de polymer y elborado previamente en JS*/-->
         background-color: rgba(117, 28, 226, 0.25);
     }
 </style>
-
 <script>
-    // registra un nuevo elemento llamado gato-polymer
-    Polymer({
-        is: "gato-p",
-
-        properties: {
-            turno: {
-                type: Number,
-                value: 0
-            },
-            seccion: {
-                type: Number,
-                value: 0
-            },
-            gato: {
-                type: Number,
-                value: 0
-            },
-            J1: {
-                nombre: {
+        // registra un nuevo elemento llamado gato-polymer
+        Polymer({
+    
+            is: "gato-p",
+    
+            properties: {
+                turno: {
+                    type: Number,
+                    value: 0
+                },
+                seccion: {
+                    type: Number,
+                    value: 0
+                },
+                gato: {
                     type: String,
                     value: ''
                 },
-                turno: {
-                    type: Number,
-                    value: 1
-                },
-                tipo: {
-                    type: String,
-                    value: 'X'
-                }
-            },
-            J2: {
-                nombre: {
+                mensaje: {
                     type: String,
                     value: ''
                 },
-                turno: {
-                    type: Number,
-                    value: 2
-                },
-                tipo: {
+                reiniciar: {
                     type: String,
-                    value: 'O'
+                    value: ''
+                },
+                iniciar: {
+                    type: String,
+                    value: ''
+                },
+                J1: {
+                    nombre: {
+                        type: String,
+                        value: ''
+                    },
+                    turno: {
+                        type: Number,
+                        value: 1
+                    },
+                    tipo: {
+                        type: String,
+                        value: 'X'
+                    }
+                },
+                J2: {
+                    nombre: {
+                        type: String,
+                        value: ''
+                    },
+                    turno: {
+                        type: Number,
+                        value: 2
+                    },
+                    tipo: {
+                        type: String,
+                        value: 'O'
+                    }
                 }
             },
-        },
-
-        is: 'gato-i',
-
-        properties: {
-            
-        },
-        is: 'mensaje',
-
-        properties: {
-            mensaje: {
-                type: String,
-                value: ''
-            },
-        },
-        is: 'accion',
-
-        properties: {
-            reinicio: {
-                type: Number,
-                value: 0
-            },
-        },
-
-        // añade las funciones nesesarias para el proceso del gato
-        comenzar: function() {
-            document.getElementById('iniciar').style.display = 'none';
-            document.getElementById('reiniciar').style.display = 'inline';
-            J1.nombre = prompt("Escriba el nombre del jugador 1:");
-            while(J1.nombre == ''){
-                alert("No puedes dejar el campo vacio");
+    
+            comenzar: function() {
+                document.getElementById('iniciar').style.display = 'none';
+                document.getElementById('reiniciar').style.display = 'inline';
                 J1.nombre = prompt("Escriba el nombre del jugador 1:");
-                
-            }
-            J2.nombre = prompt("Escriba el nombre del jugador 2:");
-            while(!J2.nombre){
-                alert("No puedes dejar el campo vacio");
+                while(J1.nombre == ''){
+                    alert("No puedes dejar el campo vacio");
+                    J1.nombre = prompt("Escriba el nombre del jugador 1:");
+                    
+                }
                 J2.nombre = prompt("Escriba el nombre del jugador 2:");
-            }
-
-            mensaje.innerText = 'Turno de '+ J1.nombre;        
-
-            gato.onclick = function(event){
-                if (event.target.className == 'cuadro') {
-                    if (turno % 2 == 0){
-                        if(event.target.innerHTML != ""){
-                            alert('Accion no valida');
+              
+                while(!J2.nombre){
+                    alert("No puedes dejar el campo vacio");
+                    J2.nombre = prompt("Escriba el nombre del jugador 2:");
+                }
+    
+                mensaje.innerText = 'Turno de '+ J1.nombre;                  
+    
+                gato.onclick = function(event){
+                    if (event.target.className == 'cuadro') {
+                        if (turno % 2 == 0){
+                            if(event.target.innerHTML != ""){
+                                alert('Accion no valida');
+                            }
+                            else{
+                                event.target.innerHTML = 'X';
+                                mensaje.innerText = 'Turno de '+ J2.nombre;
+                            }
                         }
                         else{
-                            event.target.innerHTML = 'X';
-                            mensaje.innerText = 'Turno de '+ J2.nombre;
+                            if(event.target.innerHTML != ""){
+                                alert('Accion no valida');
+                            }
+                            else{
+                                event.target.innerHTML = 'O';
+                                mensaje.innerText = 'Turno de '+ J1.nombre;
+                            }
                         }
+                    turno++;            
+                    checkWinner();
                     }
-                    else{
-                        if(event.target.innerHTML != ""){
-                            alert('Accion no valida');
-                        }
-                        else{
-                            event.target.innerHTML = 'O';
-                            mensaje.innerText = 'Turno de '+ J1.nombre;
-                        }
-                    }
-                turno++;            
-                checkWinner();
+                }
+            },
+    
+            reiniciar: function() {
+                document.getElementById('iniciar').style.display = 'inline';
+                document.getElementById('reiniciar').style.display = 'none';
+                for (let i = 0; i < seccion.length; i++) {
+                    seccion[i].innerText = '';
+                }
+                J1 = {nombre: "", turno: 1 , tipo: 'X'};
+                J2 = {nombre: "", turno: 2 , tipo: 'O'};
+                mensaje.innerText = '';
+                turno = 0;
+                comenzar();
+            },
+    
+            checkWinner: function() {
+                // combinaciones de X
+            
+                if (seccion[0].innerHTML=='X' && seccion[1].innerHTML=='X' && seccion[2].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[3].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[5].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[6].innerHTML=='X' && seccion[7].innerHTML=='X' && seccion[8].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[0].innerHTML=='X' && seccion[3].innerHTML=='X' && seccion[6].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[1].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[7].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[2].innerHTML=='X' && seccion[5].innerHTML=='X' && seccion[8].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[0].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[8].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+                if (seccion[2].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[6].innerHTML=='X')
+                    return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
+    
+                // combinaciones de O
+    
+                if (seccion[0].innerHTML=='O' && seccion[1].innerHTML=='O' && seccion[2].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[3].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[5].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[6].innerHTML=='O' && seccion[7].innerHTML=='O' && seccion[8].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[0].innerHTML=='O' && seccion[3].innerHTML=='O' && seccion[6].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[1].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[7].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[2].innerHTML=='O' && seccion[5].innerHTML=='O' && seccion[8].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[0].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[8].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+                if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
+                    return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
+    
+                // Empate
+    
+                if (seccion[0].innerHTML != '' && seccion[1].innerHTML != '' && seccion[2].innerHTML != '' && seccion[3].innerHTML != '' && seccion[4].innerHTML != '' && seccion[5].innerHTML != '' && seccion[6].innerHTML != '' && seccion[7].innerHTML != '' && seccion[8].innerHTML != '')
+                    return (mensaje.innerText = 'Es empate!');
             }
-        },
-        checkWinner: function() {
-            // combinaciones de X
+        });
         
-            if (seccion[0].innerHTML=='X' && seccion[1].innerHTML=='X' && seccion[2].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[3].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[5].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[6].innerHTML=='X' && seccion[7].innerHTML=='X' && seccion[8].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[0].innerHTML=='X' && seccion[3].innerHTML=='X' && seccion[6].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[1].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[7].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[2].innerHTML=='X' && seccion[5].innerHTML=='X' && seccion[8].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[0].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[8].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-            if (seccion[2].innerHTML=='X' && seccion[4].innerHTML=='X' && seccion[6].innerHTML=='X')
-                return (mensaje.innerText = 'El Jugador '+ J1.nombre + ' gano');
-
-            // combinaciones de O
-
-            if (seccion[0].innerHTML=='O' && seccion[1].innerHTML=='O' && seccion[2].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[3].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[5].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[6].innerHTML=='O' && seccion[7].innerHTML=='O' && seccion[8].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[0].innerHTML=='O' && seccion[3].innerHTML=='O' && seccion[6].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[1].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[7].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[2].innerHTML=='O' && seccion[5].innerHTML=='O' && seccion[8].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[0].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[8].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-            if (seccion[2].innerHTML=='O' && seccion[4].innerHTML=='O' && seccion[6].innerHTML=='O')
-                return (mensaje.innerText = 'El Jugador '+ J2.nombre + ' gano');
-
-            // Empate
-
-            if (seccion[0].innerHTML != '' && seccion[1].innerHTML != '' && seccion[2].innerHTML != '' && seccion[3].innerHTML != '' && seccion[4].innerHTML != '' && seccion[5].innerHTML != '' && seccion[6].innerHTML != '' && seccion[7].innerHTML != '' && seccion[8].innerHTML != '')
-                return (mensaje.innerText = 'Es empate!');
-        },
-        reiniciar: function() {
-            document.getElementById('iniciar').style.display = 'inline';
-            document.getElementById('reiniciar').style.display = 'none';
-            for (let i = 0; i < seccion.length; i++) {
-                seccion[i].innerText = '';
-            }
-            J1 = {nombre: "", turno: 1 , tipo: 'X'};
-            J2 = {nombre: "", turno: 2 , tipo: 'O'};
-            mensaje.innerText = '';
-            turno = 0;
-            comenzar();
-        }
-    });
 </script>
+    
+<body>
+    <h1>TIC-TAC-TOE</h1>
+    <div id="juego">
+    <div class="cuadro" id="uno"></div>
+    <div class="cuadro" id="dos"></div>
+    <div class="cuadro" id="tres"></div>
+    <div class="cuadro" id="cuatro"></div>
+    <div class="cuadro" id="cinco"></div>
+    <div class="cuadro" id="seis"></div>
+    <div class="cuadro" id="siete"></div>
+    <div class="cuadro" id="ocho"></div>
+    <div class="cuadro" id="nueve"></div>
+    </div>
+    <span id="mensaje"></span>
+    <input class="boton" type="button " id="iniciar" on-tap="comenzar">INICIAR</input>
+    <input class="boton" type="button" id="reiniciar" on-tap="reiniciar">REINICIAR</input>
+</body>
+</html>
